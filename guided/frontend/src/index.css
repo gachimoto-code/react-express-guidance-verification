@@ -1,0 +1,118 @@
+:root {
+  /* Guidance (dark-mode): theme colors are single tokens composed with
+     light-dark() from oklch values, instead of a light token set plus a
+     full redefinition inside @media (prefers-color-scheme: dark). */
+  --text: light-dark(oklch(51.4% 0.03 305), oklch(71.4% 0.019 261));
+  --text-h: light-dark(oklch(13% 0.017 299), oklch(96.7% 0.003 265));
+  --bg: light-dark(oklch(100% 0 0), oklch(20.6% 0.012 278));
+  --border: light-dark(oklch(92.1% 0.004 301), oklch(31.1% 0.018 276));
+  --code-bg: light-dark(oklch(96.3% 0.009 100), oklch(24.6% 0.015 280));
+  --accent: light-dark(oklch(60.8% 0.269 305), oklch(72.2% 0.177 306));
+  --accent-bg: light-dark(
+    oklch(60.8% 0.269 305 / 0.1),
+    oklch(72.2% 0.177 306 / 0.15)
+  );
+  --accent-border: light-dark(
+    oklch(60.8% 0.269 305 / 0.5),
+    oklch(72.2% 0.177 306 / 0.5)
+  );
+  --social-bg: light-dark(
+    oklch(96.3% 0.009 100 / 0.5),
+    oklch(31.2% 0.018 281 / 0.5)
+  );
+  --shadow:
+    light-dark(oklch(0% 0 0 / 0.1), oklch(0% 0 0 / 0.4)) 0 10px 15px -3px,
+    light-dark(oklch(0% 0 0 / 0.05), oklch(0% 0 0 / 0.25)) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  /* Guidance (typography): rem instead of px for font-size, unitless line-height. */
+  font: 1.125rem/1.45 var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  /* Guidance (dark-mode): align native UI (form controls, scrollbars) with the accent. */
+  accent-color: var(--accent);
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 1rem;
+  }
+}
+
+/* Non-color branching (the icon filter) still needs the media query:
+   light-dark() only resolves colors. */
+@media (prefers-color-scheme: dark) {
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+  /* Guidance (improve-text-layout-and-legibility): balance heading line breaks. */
+  text-wrap: balance;
+}
+
+h1 {
+  /* Guidance (responsive-design): fluid size with clamp() instead of a
+     fixed px size plus a breakpoint override. */
+  font-size: clamp(2rem, 1.4rem + 2.2vw, 3.111rem);
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 1.333rem;
+  line-height: 1.18;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 1.111rem;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 0.833rem;
+  line-height: 1.35;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}

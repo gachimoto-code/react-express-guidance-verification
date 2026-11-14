@@ -1,0 +1,442 @@
+/* guided: styles written after retrieving modern-web-guidance guides.
+   Guide ids are noted next to the rules they shaped. */
+
+/* Guidance (dynamic-sort): hide the sort status text visually while
+   keeping it available to screen readers. Never display: none. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- login ---------- */
+
+.login-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+
+.login-form {
+  inline-size: 20rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.login-form h1 {
+  font-size: 1.375rem;
+  margin: 0 0 1rem;
+}
+
+.field {
+  margin-bottom: 0.875rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.field input {
+  display: block;
+  inline-size: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+/* Guidance (validate-input-after-interaction): error styling appears
+   only via :user-invalid — i.e. after the user has interacted — and is
+   never shown by color alone (an icon + text message accompanies it). */
+.field input:user-invalid {
+  border-color: oklch(57.7% 0.215 27.3);
+  background-color: oklch(95.4% 0.038 20);
+}
+
+.field input:user-valid {
+  border-color: oklch(62.7% 0.17 149);
+}
+
+.error-msg {
+  display: none;
+  color: oklch(57.7% 0.215 27.3);
+  font-size: 0.8125rem;
+  margin-top: 0.25rem;
+}
+
+.field input:user-invalid ~ .error-msg {
+  display: block;
+}
+
+.server-error {
+  color: oklch(57.7% 0.215 27.3);
+  font-size: 0.8125rem;
+  margin: 0.5rem 0;
+}
+
+.primary-button {
+  inline-size: 100%;
+  padding: 0.625rem;
+  font-size: 0.875rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.demo-hint {
+  font-size: 0.75rem;
+  color: var(--text);
+  margin-top: 0.75rem;
+}
+
+/* ---------- app shell ---------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+.sidebar {
+  border-inline-end: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.side-nav button {
+  text-align: start;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  background: none;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.side-nav button.active {
+  background: var(--accent-bg);
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  font-size: 0.75rem;
+}
+
+.user-email {
+  color: var(--text);
+  word-break: break-all;
+}
+
+.main {
+  padding: 1.5rem 2rem;
+  min-width: 0;
+}
+
+.main h2 {
+  outline: none;
+}
+
+/* ---------- dashboard stats ---------- */
+
+/* Guidance (size-aware-styling): the stats area is a container; the
+   cards respond to its width, not the viewport's. */
+.stats-container {
+  container-type: inline-size;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@container (min-width: 34rem) {
+  .stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@container (min-width: 56rem) {
+  .stat-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text);
+  margin: 0 0 0.375rem;
+}
+
+.stat-value {
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-h);
+}
+
+/* ---------- data table ---------- */
+
+/* Guidance (responsive-table): scrollable region + container for the
+   stacked layout below. */
+.table-wrapper {
+  overflow: auto;
+  max-block-size: min(32rem, 80dvh);
+  container-type: inline-size;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  inline-size: 100%;
+  min-inline-size: 35rem;
+  font-size: 0.875rem;
+
+  /* Column labels injected in the stacked layout */
+  --label-1: "名前";
+  --label-2: "カテゴリ";
+  --label-3: "数値";
+  --label-4: "日付";
+}
+
+.data-table caption {
+  text-align: start;
+  padding: 0.75rem 0.625rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* Guidance (responsive-table): sticky column headers while scrolling. */
+.data-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+.data-table th,
+.data-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.625rem;
+  text-align: start;
+  background: var(--bg);
+}
+
+/* Guidance (sortable-table): the button supplies the cell padding and
+   fills the header cell; only th:has(> button) drops its own padding. */
+.data-table th:has(> button) {
+  padding: 0;
+}
+
+.data-table th > button {
+  display: block;
+  inline-size: 100%;
+  min-block-size: 1.5rem;
+  padding: 0.5rem 0.625rem;
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+  color: var(--text-h);
+}
+
+/* Guidance (sortable-table): the direction icon is decorative and is
+   driven from th[aria-sort] in CSS; aria-sort itself conveys the state. */
+.data-table th[aria-sort="ascending"] .sort-icon::after {
+  content: "▲";
+  margin-inline-start: 0.375rem;
+  font-size: 0.625rem;
+}
+
+.data-table th[aria-sort="descending"] .sort-icon::after {
+  content: "▼";
+  margin-inline-start: 0.375rem;
+  font-size: 0.625rem;
+}
+
+.data-table tbody tr {
+  cursor: pointer;
+}
+
+.data-table tbody tr:hover {
+  background: var(--accent-bg);
+}
+
+/* Guidance (dynamic-sort): rows animate to their new positions when the
+   sort changes; identity comes from the element itself. */
+.data-table tbody tr {
+  view-transition-name: match-element;
+}
+
+/* Guidance (responsive-table): below 600px of *container* width the
+   table stacks into cards with labels injected from CSS variables. */
+@container (width < 600px) {
+  .data-table {
+    min-inline-size: 0;
+  }
+
+  .data-table,
+  .data-table thead,
+  .data-table tbody,
+  .data-table tr,
+  .data-table th,
+  .data-table td {
+    display: block;
+  }
+
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tr {
+    margin-block-end: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+
+  .data-table td {
+    border-bottom: none;
+  }
+
+  .data-table td:nth-child(1)::before {
+    content: var(--label-1) ": ";
+    font-weight: 600;
+  }
+
+  .data-table td:nth-child(2)::before {
+    content: var(--label-2) ": ";
+    font-weight: 600;
+  }
+
+  .data-table td:nth-child(3)::before {
+    content: var(--label-3) ": ";
+    font-weight: 600;
+  }
+
+  .data-table td:nth-child(4)::before {
+    content: var(--label-4) ": ";
+    font-weight: 600;
+  }
+}
+
+/* ---------- detail dialog ---------- */
+
+/* Guidance (dialog): style ::backdrop; scope display rules to [open]
+   so the closed state is never overridden. */
+.detail-dialog {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  inline-size: 22.5rem;
+  max-inline-size: calc(100vw - 2rem);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.detail-dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+  /* Guidance (dialog): without this, scrolling over the backdrop
+     chains to the page behind it. */
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Guidance (dialog): stop scroll gestures inside the modal dialog
+   chaining to the page. Do NOT lock scroll with overflow: hidden on
+   html/body. */
+.detail-dialog:modal {
+  overscroll-behavior: contain;
+}
+
+.detail-list {
+  margin: 0 0 1rem;
+}
+
+.detail-list > div {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-list dt {
+  inline-size: 5.625rem;
+  color: var(--text);
+  font-size: 0.8125rem;
+}
+
+.detail-list dd {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* ---------- shell collapse & motion preferences ---------- */
+
+@media (width < 48rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-inline-end: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .side-nav {
+    flex-direction: row;
+  }
+
+  .main {
+    padding: 1rem;
+  }
+}
+
+/* Guidance (dynamic-sort / same-document-transitions): honor reduced
+   motion by disabling view-transition animations. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
